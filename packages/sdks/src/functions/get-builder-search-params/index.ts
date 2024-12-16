@@ -12,29 +12,39 @@ const BUILDER_OPTIONS_PREFIX = 'options.';
  * @returns
  */
 export const getBuilderSearchParams = (
-  _options: QueryObject | URLSearchParams | undefined
+  _options: QueryObject | URLSearchParams | undefined,
+  extraArgs?: { model: string }
 ) => {
   if (!_options) {
     return {};
   }
   const options = normalizeSearchParams(_options);
-
   const newOptions: QueryObject = {};
   Object.keys(options).forEach((key) => {
     if (key.startsWith(BUILDER_SEARCHPARAMS_PREFIX)) {
-      const trimmedKey = key
-        .replace(BUILDER_SEARCHPARAMS_PREFIX, '')
-        .replace(BUILDER_OPTIONS_PREFIX, '');
-      newOptions[trimmedKey] = options[key];
+      if (key === 'builder.preview' && options[key] === 'BUILDER_STUDIO') {
+        newOptions['preview'] = extraArgs?.model || '';
+      } else if (key === 'builder.userAttributes.date') {
+        const date = new Date(options[key] as string);
+        newOptions['query.startDate.$lte'] = `${date.getTime()}`;
+        newOptions['query.endDate.$gte'] = `${date.getTime()}`;
+      } else {
+        const trimmedKey = key
+          .replace(BUILDER_SEARCHPARAMS_PREFIX, '')
+          .replace(BUILDER_OPTIONS_PREFIX, '');
+        newOptions[trimmedKey] = options[key];
+      }
     }
   });
   return newOptions;
 };
 
-export const getBuilderSearchParamsFromWindow = () => {
+export const getBuilderSearchParamsFromWindow = (extraArgs?: {
+  model: string;
+}) => {
   if (!isBrowser()) {
     return {};
   }
   const searchParams = new URLSearchParams(window.location.search);
-  return getBuilderSearchParams(searchParams);
+  return getBuilderSearchParams(searchParams, extraArgs);
 };
