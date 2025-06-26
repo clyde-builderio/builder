@@ -623,7 +623,6 @@ describe('flushGetContentQueue', () => {
 
     const result = await builder['flushGetContentQueue'](true, [
       {
-        apiEndpoint: 'content',
         model: expectedModel,
         format: expectedFormat,
         key: expectedModel,
@@ -651,7 +650,6 @@ describe('flushGetContentQueue', () => {
 
     const result = await builder['flushGetContentQueue'](true, [
       {
-        apiEndpoint: 'content',
         model: expectedModel,
         format: expectedFormat,
         key: expectedModel,
@@ -693,7 +691,6 @@ describe('flushGetContentQueue', () => {
 
     const result = await builder['flushGetContentQueue'](true, [
       {
-        apiEndpoint: 'content',
         model: expectedModel,
         format: expectedFormat,
         key: expectedModel,
@@ -723,7 +720,6 @@ describe('flushGetContentQueue', () => {
 
     const result = await builder['flushGetContentQueue'](true, [
       {
-        apiEndpoint: 'content',
         model: expectedModel,
         format: expectedFormat,
         key: expectedModel,
