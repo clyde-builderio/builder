@@ -1,5 +1,11 @@
 # @builder.io/sdk
 
+## 4.0.4
+
+### Patch Changes
+
+- Backported fix from v6.1.1: Corrected the conversion of query-objects with $-mongo-operators which are passed to builder.get() with apiEndpoint is "content"
+
 ## 4.0.3
 
 ### Patch Changes
